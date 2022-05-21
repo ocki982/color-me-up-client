@@ -1,0 +1,10 @@
+.header{
+    display: flex;
+    justify-content: space-between;
+
+    &__avatar{
+        width: 5rem;
+        border-radius: 50%;
+        background-color: ghostwhite;
+    }
+}

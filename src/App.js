@@ -11,7 +11,7 @@ function App() {
 		<BrowserRouter>
 			<Switch>
 				<Route path="/home" component={HomePage}/>
-				<Route path="/login" component={LoginPage}/>
+				<Route path="/" component={LoginPage}/>
 				<Route path="/register" component={RegisterPage}/>
 				<Route path="/profile" component={ProfilePage}/>
 			</Switch>

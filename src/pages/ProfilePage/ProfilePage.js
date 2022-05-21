@@ -1,9 +1,11 @@
 import React from 'react';
-import './ProfilePage.scs'
+import Header from '../../components/Header/Header';
+import './ProfilePage.scss'
 
 const ProfilePage = () => {
     return (
         <div>
+            <Header/>
             
         </div>
     );

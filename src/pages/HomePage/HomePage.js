@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react"
 import io from "socket.io-client"
+import Header from "../../components/Header/Header";
 import "./HomePage.scss"
 
 
@@ -42,7 +43,8 @@ const HomePage = () => {
 	}
 
 	return (
-		<div className="card">
+		<div className="card">					
+		<Header/>
 			<form onSubmit={onMessageSubmit}>
 				<h1>Messenger</h1>
 				<div className="name-field">

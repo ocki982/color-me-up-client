@@ -3,8 +3,9 @@ import './Header.scss'
 
 const Header = () => {
     return (
-        <div>
-            
+        <div className='header'>
+            <h1 className='header__title'>Color me up!</h1>
+            <img className='header__avatar' alt="avatar"></img>
         </div>
     );
 };
