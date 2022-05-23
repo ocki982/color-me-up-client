@@ -1,10 +1,30 @@
 .header{
     display: flex;
     justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 2rem;
+
+    &__title{
+        font-size: 1.5rem;
+        color: #800080;
+        font-weight: bold;
+    }
+
+    &__link{
+        text-decoration: none;
+    }
 
     &__avatar{
-        width: 5rem;
+        max-width: 2rem;
+        max-height: 2rem;
         border-radius: 50%;
         background-color: ghostwhite;
+    }
+
+    &__help{
+        margin-right: 1rem;
+        max-width: 2rem;
+        max-height: 2rem;
+        filter: invert(6%) sepia(43%) saturate(7034%) hue-rotate(291deg) brightness(55%) contrast(109%);
     }
 }
