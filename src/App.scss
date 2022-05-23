@@ -6,13 +6,55 @@
 }
 
 html,
-body{
-    font-family: 'Roboto', 'Arial', sans-serif;
+body,
+#root{
+  width: 100%;
+  height: 100%;
+  font-family: 'Roboto', 'Arial', sans-serif;
 }
 
 button{
   cursor: pointer;
 }
+
 .app{
-    background: linear-gradient(to right, #c9ffbf, #ffafbd); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    position: relative;
+}
+
+.canvas{
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  position: absolute;
+  background: linear-gradient(270deg, #21cda0, #cd5421, #c9ed29, #ed29cf, #ff808b, #bf0d3e);
+  background-size: 800% 800%;
+
+  -webkit-animation: AnimationName 30s ease infinite;
+  -moz-animation: AnimationName 30s ease infinite;
+  animation: AnimationName 30s ease infinite;  
+}
+
+@-webkit-keyframes AnimationName {
+  0%{background-position:0% 51%}
+  50%{background-position:100% 50%}
+  100%{background-position:0% 51%}
+}
+@-moz-keyframes AnimationName {
+  0%{background-position:0% 51%}
+  50%{background-position:100% 50%}
+  100%{background-position:0% 51%}
+}
+@keyframes AnimationName {
+  0%{background-position:0% 51%}
+  50%{background-position:100% 50%}
+  100%{background-position:0% 51%}
+}
+
+.page{
+  position: relative;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 99;
 }
