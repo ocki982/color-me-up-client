@@ -4,8 +4,9 @@ import Header from "../../components/Header/Header";
 import "./HomePage.scss"
 
 
+
 const HomePage = () => {
-	const [ state, setState ] = useState({ message: "", name: "" })
+	const [ state, setState ] = useState({ message: "", name: "octa" })
 	const [ chat, setChat ] = useState([])
 
 	const socketRef = useRef()
@@ -16,6 +17,14 @@ const HomePage = () => {
 			socketRef.current.on("message", ({ name, message }) => {
 				setChat([ ...chat, { name, message } ])
 			})
+			// socketRef.current.on("output-messages", data => {
+			// 	if (data.length) {
+			// 		// console.log(data)
+			// 		return data.map(data => (
+			// 			setChat([ { message:data.comment, name:data.user }])
+			// 		))
+			// 	}
+			// })
 			return () => socketRef.current.disconnect()
 		},
 		[ chat ]
@@ -35,8 +44,8 @@ const HomePage = () => {
 	const renderChat = () => {
 		return chat.map(({ name, message }, index) => (
 			<div key={index}>
-				<h3>
-					{name}: <span>{message}</span>
+				<h3 className="home__name">
+					{name}: <span className="home__text">{message}</span>
 				</h3>
 			</div>
 		))
@@ -45,25 +54,24 @@ const HomePage = () => {
 	return (
 		<div>		
 			<Header/>
-			<div className="card">					
-				<form onSubmit={onMessageSubmit}>
-					<h1>Messenger</h1>
-					<div className="name-field">
-						<input name="name" onChange={(e) => onTextChange(e)} value={state.name} label="Name" />
-					</div>
+			<div className="home">					
+				<form className="home__form" onSubmit={onMessageSubmit}>
 					<div>
 						<input
+							className="home__input"
 							name="message"
 							onChange={(e) => onTextChange(e)}
 							value={state.message}
 							label="Message"
 						/>
 					</div>
-					<button>Send Message</button>
+					<button className="home__button">Send Message</button>
 				</form>
-				<div className="render-chat">
-					<h1>Chat Log</h1>
+				<div className="home__chat">
+					<h1>Express yourself</h1>
+					<div>
 					{renderChat()}
+					</div>
 				</div>
 			</div>
 		</div>
