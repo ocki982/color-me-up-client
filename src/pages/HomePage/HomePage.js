@@ -43,26 +43,28 @@ const HomePage = () => {
 	}
 
 	return (
-		<div className="card">					
-		<Header/>
-			<form onSubmit={onMessageSubmit}>
-				<h1>Messenger</h1>
-				<div className="name-field">
-					<input name="name" onChange={(e) => onTextChange(e)} value={state.name} label="Name" />
+		<div>		
+			<Header/>
+			<div className="card">					
+				<form onSubmit={onMessageSubmit}>
+					<h1>Messenger</h1>
+					<div className="name-field">
+						<input name="name" onChange={(e) => onTextChange(e)} value={state.name} label="Name" />
+					</div>
+					<div>
+						<input
+							name="message"
+							onChange={(e) => onTextChange(e)}
+							value={state.message}
+							label="Message"
+						/>
+					</div>
+					<button>Send Message</button>
+				</form>
+				<div className="render-chat">
+					<h1>Chat Log</h1>
+					{renderChat()}
 				</div>
-				<div>
-					<input
-						name="message"
-						onChange={(e) => onTextChange(e)}
-						value={state.message}
-						label="Message"
-					/>
-				</div>
-				<button>Send Message</button>
-			</form>
-			<div className="render-chat">
-				<h1>Chat Log</h1>
-				{renderChat()}
 			</div>
 		</div>
 	)
