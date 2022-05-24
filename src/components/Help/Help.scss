@@ -1,0 +1,66 @@
+@use '../../styles/partials/variables' as *;
+
+
+.popup-overlay{
+    background-color: rgba($color: black, $alpha: 0.2);
+}
+.popup {
+    padding: 1.5rem 1rem;
+    background-color: rgba($color: white, $alpha: 0.7);
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    @include tablet {
+        height: 16.6875rem;
+        padding: 0 4rem 2.5rem 4rem;
+        margin: 0 3rem;
+        border-radius: 10px;
+    }
+    @include desktop {
+        padding: 0 4rem 3rem 4rem;
+        width: 90vh;
+        height: fit-content;
+    }
+    &__title {
+        margin-top: 2.5rem;
+        color: black;
+    }
+    &__content {
+        margin: 1rem 0;
+        @include tablet{
+            width: 100%;
+        }
+    }
+    &__actions {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        @include tablet {
+            justify-content: flex-end;
+        }
+    }
+    &__close {
+        cursor: pointer;
+        position: absolute;
+        display: block;
+        width: 14px;
+        height: 14px;
+        right: 1.75rem;
+        top: 0.75rem;
+        font-size: 1.5rem;
+        background:transparent;
+        border: none;
+        @include tablet {
+            right: 4.75rem;
+        }
+        @include desktop {
+            right: 5rem;
+        }
+    }
+
+    &__icon{
+        margin-right: 1rem;
+        filter: invert(6%) sepia(43%) saturate(7034%) hue-rotate(291deg) brightness(55%) contrast(109%);
+    }
+}
