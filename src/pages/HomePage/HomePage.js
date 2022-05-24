@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react"
+import React, { useEffect, useState } from "react"
 import io from "socket.io-client"
 import Header from "../../components/Header/Header";
 import "./HomePage.scss"
@@ -6,49 +6,50 @@ import "./HomePage.scss"
 
 
 const HomePage = () => {
-	const [ state, setState ] = useState({ message: "", name: "octa" })
-	const [ chat, setChat ] = useState([])
+	const [ inputMessage, setInputMessage ] = useState('');
+	const [ allMessages, setAllMessages ] = useState([]);
 
-	const socketRef = useRef()
+	const [socket, setSocket] = useState(null);
 
-	useEffect(
-		() => {
-			socketRef.current = io.connect("http://localhost:4000")
-			socketRef.current.on("message", ({ name, message }) => {
-				setChat([ ...chat, { name, message } ])
-			})
-			// socketRef.current.on("output-messages", data => {
-			// 	if (data.length) {
-			// 		// console.log(data)
-			// 		return data.map(data => (
-			// 			setChat([ { message:data.comment, name:data.user }])
-			// 		))
-			// 	}
-			// })
-			return () => socketRef.current.disconnect()
-		},
-		[ chat ]
-	)
+	useEffect(() => {
+		const newSocket = io(`http://localhost:4000`);
+		setSocket(newSocket);
+		return () => newSocket.close();
+	}, [setSocket]);
 
-	const onTextChange = (e) => {
-		setState({ ...state, [e.target.name]: e.target.value })
+	useEffect(() => {
+		const messageListener = (message) => {
+			setAllMessages((prevMessages) => {
+				const newMessages = {...prevMessages};
+				newMessages[message.id] = message;
+				return newMessages;
+			  });
+		}
+		socket?.on('message', messageListener);
+		socket?.emit('getMessages');
+
+		return () => socket?.off('message', messageListener);
+	},[socket])
+
+	const handleChangeMessage = (e) => {
+		setInputMessage(e.target.value)
 	}
 
-	const onMessageSubmit = (e) => {
-		const { name, message } = state
-		socketRef.current.emit("message", { name, message })
+	const onMessageSubmit = (e) => { 
 		e.preventDefault()
-		setState({ message: "", name })
+		socket?.emit("message", inputMessage);
+		setInputMessage("");
 	}
 
 	const renderChat = () => {
-		return chat.map(({ name, message }, index) => (
-			<div key={index} className="home__box">
-				<h3 className="home__name">
-					{name}: <span className="home__text">{message}</span>
-				</h3>
-			</div>
-		))
+		return [...Object.values(allMessages)]
+			.map((message, index) => (
+			  <div key={index} className="home__box">
+			   		<h3 className="home__name">
+			   			{message.user.name}: <span className="home__text">{message.value}</span>
+			   		</h3>
+			   	</div>
+			))
 	}
 
 	return (
@@ -60,8 +61,8 @@ const HomePage = () => {
 						<input
 							className="home__input"
 							name="message"
-							onChange={(e) => onTextChange(e)}
-							value={state.message}
+							onChange={(e) => handleChangeMessage(e)}
+							value={inputMessage}
 							label="Message"
 						/>
 					</div>

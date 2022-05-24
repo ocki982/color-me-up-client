@@ -28,7 +28,7 @@ button{
   height: 100%;
   z-index: 0;
   position: absolute;
-  background: radial-gradient( $Happy, $Fear, $Sad, $Excited, $Bored, $Angry);
+  background: linear-gradient( 270deg, $Happy, $Fear, $Sad, $Excited, $Bored, $Angry);
   background-size: 600% 600%;
 
   -webkit-animation: AnimationName 50s ease infinite;
