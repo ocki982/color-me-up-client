@@ -43,7 +43,7 @@ const HomePage = () => {
 
 	const renderChat = () => {
 		return chat.map(({ name, message }, index) => (
-			<div key={index}>
+			<div key={index} className="home__box">
 				<h3 className="home__name">
 					{name}: <span className="home__text">{message}</span>
 				</h3>
@@ -68,7 +68,7 @@ const HomePage = () => {
 					<button className="home__button">Send Message</button>
 				</form>
 				<div className="home__chat">
-					<h1>Express yourself</h1>
+					<h1 className="home__title">Express yourself</h1>
 					<div>
 					{renderChat()}
 					</div>

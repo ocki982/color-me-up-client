@@ -48,8 +48,8 @@ class ProfilePage extends Component {
     renderMessages = () => {
 		return this.state.user.map(({ text }, index) => (
 			<div key={index}>
-				<h3>
-					<span>{text}</span>
+				<h3 className="profile__name">
+					<span className="profile__text">{text}</span>
 				</h3>
 			</div>
 		))
@@ -60,7 +60,7 @@ class ProfilePage extends Component {
     render() {
         if (this.state.failedAuth) {
             return (
-                <main className="dashboard">
+                <main className="profile">
                     <p>You must be logged in to see this page. <Link to="/">Log in</Link></p>
                 </main>
             )
@@ -68,7 +68,7 @@ class ProfilePage extends Component {
 
         if (!this.state.user) {
             return (
-                <main className="dashboard">
+                <main className="profile">
                     <p>Loading...</p>
                 </main>
             )
@@ -79,16 +79,16 @@ class ProfilePage extends Component {
         return (
             <div>
                 <Header/>
-                <main className="dashboard">
-                    <h1 className="dashboard__title">Dashboard</h1>
+                <main className="profile">
+                    <h1 className="profile__title">Profile</h1>
                     <p>
-                        Welcome back, {user}! 👋
+                        Welcome back, {user}!
                     </p>
-                    <h2>My Profile</h2>
+                    <h2 className="profile__dash">My Messages</h2>
                     {this.renderMessages()}
 
 
-                    <button className="dashboard__logout" onClick={this.handleLogout}>
+                    <button className="profile__logout" onClick={this.handleLogout}>
                         Log out
                     </button>
                 </main>
