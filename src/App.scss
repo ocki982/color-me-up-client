@@ -1,4 +1,6 @@
 @use './styles/partials/fonts' as *;
+@use './styles/partials/variables' as *;
+
 
 *, *::before, *::after {
   box-sizing: border-box;
@@ -26,28 +28,28 @@ button{
   height: 100%;
   z-index: 0;
   position: absolute;
-  background: linear-gradient(270deg, #21cda0, #cd5421, #c9ed29, #ed29cf, #ff808b, #bf0d3e);
-  background-size: 800% 800%;
+  background: radial-gradient( $Happy, $Fear, $Sad, $Excited, $Bored, $Angry);
+  background-size: 600% 600%;
 
-  -webkit-animation: AnimationName 30s ease infinite;
-  -moz-animation: AnimationName 30s ease infinite;
-  animation: AnimationName 30s ease infinite;  
+  -webkit-animation: AnimationName 50s ease infinite;
+  -moz-animation: AnimationName 50s ease infinite;
+  animation: AnimationName 50s ease infinite;  
 }
 
 @-webkit-keyframes AnimationName {
-  0%{background-position:0% 51%}
-  50%{background-position:100% 50%}
-  100%{background-position:0% 51%}
+  0%{background-position:100% 51%}
+  50%{background-position:50% 50%}
+  100%{background-position:100% 51%}
 }
 @-moz-keyframes AnimationName {
-  0%{background-position:0% 51%}
-  50%{background-position:100% 50%}
-  100%{background-position:0% 51%}
+  0%{background-position:100% 51%}
+  50%{background-position:50% 50%}
+  100%{background-position:100% 51%}
 }
 @keyframes AnimationName {
-  0%{background-position:0% 51%}
-  50%{background-position:100% 50%}
-  100%{background-position:0% 51%}
+  0%{background-position:100% 51%}
+  50%{background-position:50% 50%}
+  100%{background-position:100% 51%}
 }
 
 .page{

@@ -47,7 +47,25 @@ export default function Render(props) {
         </Sphere>
         <Sphere visible args={[1, 100, 200]} position={[-2, 3, -1]} scale={1}>
             <MeshDistortMaterial
-            color="#123456"
+            color="orange"
+            attach="material"
+            distort={0.6}
+            speed={1}
+            roughness={0.65}
+            />
+        </Sphere>
+        <Sphere visible args={[1, 100, 200]} position={[-2, -4, -2]} scale={1}>
+            <MeshDistortMaterial
+            color="green"
+            attach="material"
+            distort={0.6}
+            speed={1}
+            roughness={0.65}
+            />
+        </Sphere>
+        <Sphere visible args={[1, 100, 200]} position={[-2, 2, -7]} scale={1}>
+            <MeshDistortMaterial
+            color="purple"
             attach="material"
             distort={0.6}
             speed={1}

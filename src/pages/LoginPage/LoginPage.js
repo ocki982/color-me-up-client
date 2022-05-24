@@ -3,6 +3,13 @@ import { Component } from "react";
 import Input from '../../components/Input/Input';
 import axios from "axios";
 import { Redirect, Link } from 'react-router-dom';
+import styled, { keyframes } from "styled-components";
+import { fadeIn } from 'react-animations';
+const FadeInDownAnimation = keyframes`${fadeIn}`;
+const FadeInDownDiv = styled.div`
+  animation: 3s ${FadeInDownAnimation};
+`;
+
 
 class LoginPage extends Component {
     state = {
@@ -29,22 +36,24 @@ class LoginPage extends Component {
 
     render() {
         return (
-            <main className="login-page">
-                <form className="login" onSubmit={this.handleSubmit}>
-                    <h1 className="login__title">Log in</h1>
+            <FadeInDownDiv>
+                <main className="login-page">
+                    <form className="login" onSubmit={this.handleSubmit}>
+                        <h1 className="login__title">Log in</h1>
 
-                    <Input type="text" name="email" label="Email" />
-                    <Input type="password" name="password" label="Password" />
-                
-                    <button className="login__button">Log in</button>
+                        <Input type="text" name="email" label="Email" />
+                        <Input type="password" name="password" label="Password" />
+                    
+                        <button className="login__button">Log in</button>
 
-                    {this.state.error && <div className="login__message">{this.state.error}</div>}
-                    {this.state.success && <Redirect to="/home" />}
-                </form>
-                <p>
-                    Need an account? <Link to="/register">Register</Link>
-                </p>
-            </main>
+                        {this.state.error && <div className="login__message">{this.state.error}</div>}
+                        {this.state.success && <Redirect to="/home" />}
+                    </form>
+                    <p>
+                        Need an account? <Link to="/register">Register</Link>
+                    </p>
+                </main>
+            </FadeInDownDiv>
         );
     }
 }

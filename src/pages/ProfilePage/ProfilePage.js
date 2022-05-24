@@ -6,7 +6,8 @@ import Header from "../../components/Header/Header";
 
 class ProfilePage extends Component {
     state = {
-        user: null,
+        post: null,
+        user: "",
         failedAuth: false
     }
 
@@ -27,7 +28,7 @@ class ProfilePage extends Component {
             })
             .then((response) => {
                 this.setState({
-                    user: response.data
+                    post: response.data
                 });
             })
             .catch(() => {
@@ -35,18 +36,36 @@ class ProfilePage extends Component {
                     failedAuth: true
                 })
             });
+        axios
+            .get('http://localhost:4000/users/current', {
+                headers: {
+                    Authorization: 'Bearer ' + token
+                }
+            })
+            .then((response) => {
+                this.setState({
+                    user: response.data.username
+                });
+            })
+            .catch(() => {
+                this.setState({
+                    failedAuth: true
+                })
+            });
+        
     }
 
     handleLogout = () => {
         localStorage.removeItem("token");
         this.setState({
-            user: null,
+            post:null,
+            user: "",
             failedAuth: true
         })
     };
 
     renderMessages = () => {
-		return this.state.user.map(({ text }, index) => (
+		return this.state.post.map(({ text }, index) => (
 			<div key={index}>
 				<h3 className="profile__name">
 					<span className="profile__text">{text}</span>
@@ -66,7 +85,7 @@ class ProfilePage extends Component {
             )
         }
 
-        if (!this.state.user) {
+        if (!this.state.post) {
             return (
                 <main className="profile">
                     <p>Loading...</p>
@@ -74,15 +93,13 @@ class ProfilePage extends Component {
             )
         }
 
-        const { user } = this.state.user[0];
-
         return (
             <div>
                 <Header/>
                 <main className="profile">
                     <h1 className="profile__title">Profile</h1>
                     <p>
-                        Welcome back, {user}!
+                        Welcome back, {this.state.user}!
                     </p>
                     <h2 className="profile__dash">My Messages</h2>
                     {this.renderMessages()}
