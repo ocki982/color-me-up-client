@@ -5,9 +5,7 @@
     align-items: center;
     grid-template-columns: 1fr 1fr;
     margin: 1rem;
-    height: 100vh;
     padding: 1rem;
-
 
     &__input{
       width: 20rem;
@@ -45,15 +43,19 @@
     }
     }
     
-    &__chat {
+    &__content {
       width: 30rem;
       border-radius: 5px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
       align-items: center;
-      height: 100%;
-      // box-shadow: 0px 3px 24px -8px rgba(0, 0, 0, 0.75);
+    }
+
+    &__chat {
+      margin-top: 40px;
+      max-height: 400px;
+      overflow: auto;
     }
 
     &__title{

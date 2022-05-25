@@ -28,34 +28,13 @@ button{
   height: 100%;
   z-index: 0;
   position: absolute;
-  background: linear-gradient( 270deg, $Happy, $Fear, $Sad, $Excited, $Bored, $Angry);
-  background-size: 600% 600%;
-
-  -webkit-animation: AnimationName 50s ease infinite;
-  -moz-animation: AnimationName 50s ease infinite;
-  animation: AnimationName 50s ease infinite;  
-}
-
-@-webkit-keyframes AnimationName {
-  0%{background-position:100% 51%}
-  50%{background-position:50% 50%}
-  100%{background-position:100% 51%}
-}
-@-moz-keyframes AnimationName {
-  0%{background-position:100% 51%}
-  50%{background-position:50% 50%}
-  100%{background-position:100% 51%}
-}
-@keyframes AnimationName {
-  0%{background-position:100% 51%}
-  50%{background-position:50% 50%}
-  100%{background-position:100% 51%}
 }
 
 .page{
   position: relative;
   width: 100%;
-  height: 100%;
+  height: 100vh;
+  overflow: hidden;
   top: 0;
   left: 0;
   z-index: 99;

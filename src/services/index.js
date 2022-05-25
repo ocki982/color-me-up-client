@@ -43,4 +43,3 @@ const axiosCall = async (url, { query, ...requestOptions }) => {
 };
 
 export const unAuthAxiosCall = (url, requestOptions) => axiosCall(url, requestOptions);
-

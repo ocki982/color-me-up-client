@@ -3,6 +3,8 @@ import io from "socket.io-client";
 import Header from "../../components/Header/Header";
 import "./HomePage.scss";
 import { getEmotion } from "../../services/emotionServices";
+import { unAuthAxiosCall } from "../../services";
+import { arrayUnion } from "../../utils"
 
 const HomePage = () => {
   const [inputMessage, setInputMessage] = useState("");
@@ -17,11 +19,21 @@ const HomePage = () => {
   }, [setSocket]);
 
   useEffect(() => {
+    unAuthAxiosCall("/posts/all", {
+      method: "GET"
+    }).then((response) =>{
+      const newAllMessages = arrayUnion(allMessages, response.data, (arr1, arr2) => arr1.id === arr2.id)
+      setAllMessages(newAllMessages)
+    });
+  }, [])
+  
+  useEffect(() => {
     const messageListener = (message) => {
       setAllMessages((prevMessages) => {
-        const newMessages = { ...prevMessages };
+        let newMessages = { ...prevMessages };
         newMessages[message.id] = message;
-        return newMessages;
+        newMessages = [...Object.values(newMessages)].map(({id, text, emotion, user}) => ({id, text, emotion, user}))
+        return arrayUnion(allMessages, newMessages, (arr1, arr2) => arr1.id === arr2.id)
       });
     };
     socket?.on("message", messageListener);
@@ -42,11 +54,11 @@ const HomePage = () => {
   };
 
   const renderChat = () => {
-    return [...Object.values(allMessages)].map((message, index) => (
+    return allMessages.map((message, index) => (
       <div key={index} className="home__box">
-        <h3 className="home__name">
+        <h3 className="home__name" style={{backgroundColor: message.emotion + `50`, color: message.emotion}}>
           {message.user.name}:{" "}
-          <span className="home__text">{message.text + message.emotion}</span>
+          <span className="home__text" >{message.text}</span>
         </h3>
       </div>
     ));
@@ -67,9 +79,9 @@ const HomePage = () => {
           </div>
           <button className="home__button">Send Message</button>
         </form>
-        <div className="home__chat">
+        <div className="home__content">
           <h1 className="home__title">Express yourself</h1>
-          <div>{renderChat()}</div>
+          <div className="home__chat">{renderChat()}</div>
         </div>
       </div>
     </div>
