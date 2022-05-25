@@ -41,7 +41,7 @@ class RegisterPage extends Component {
                     <form className="signup" onSubmit={this.handleSubmit}>
                         <h1 className="signup__title">Register</h1>
 
-                        <Input type="text" name="username" label="First name" />
+                        <Input type="text" name="username" label="Username" />
                         <Input type="text" name="email" label="Email" />
                         <Input type="password" name="password" label="Password" />
 
