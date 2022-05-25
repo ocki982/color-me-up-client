@@ -5,7 +5,7 @@ import { extend, Canvas, useFrame } from "@react-three/fiber";
 
 extend({ MeshLine, MeshLineMaterial })
 
-const Fatline = ({ curve, width, color, speed }) => {
+const Confetti = ({ curve, width, color, speed }) => {
   const material = useRef();
   useFrame(() => (material.current.uniforms.dashOffset.value -= speed));
   return (
@@ -57,14 +57,14 @@ const Lines = ({ count, colors }) => {
       }),
     [colors, count]
   );
-  return lines.map((props, index) => <Fatline key={index} {...props} />);
+  return lines.map((props, index) => <Confetti key={index} {...props} />);
 };
 
 const Background = () => {
   return (
     <Canvas linear camera={{ position: [0, 0, 10], fov: 25 }}>
       <Lines
-        count={40}
+        count={100}
         colors={[
           "orange",
           "purple",

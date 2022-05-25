@@ -27,6 +27,7 @@ class ProfilePage extends Component {
                 }
             })
             .then((response) => {
+                console.log(response)
                 this.setState({
                     post: response.data
                 });
@@ -65,9 +66,9 @@ class ProfilePage extends Component {
     };
 
     renderMessages = () => {
-		return this.state.post.map(({ text }, index) => (
+		return this.state.post.map(({ text, emotion }, index) => (
 			<div key={index}>
-				<h3 className="profile__name">
+				<h3 className="profile__name" style={{backgroundColor: emotion + `50`, color: emotion}}>
 					<span className="profile__text">{text}</span>
 				</h3>
 			</div>
@@ -98,10 +99,7 @@ class ProfilePage extends Component {
                 <Header/>
                 <main className="profile">
                     <h1 className="profile__title">Profile</h1>
-                    <p>
-                        Welcome back, {this.state.user}!
-                    </p>
-                    <h2 className="profile__dash">My Messages</h2>
+                    <h2 className="profile__dash"> {this.state.user}'s Messages</h2>
                     {this.renderMessages()}
 
 

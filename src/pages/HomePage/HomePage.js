@@ -1,15 +1,22 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import io from "socket.io-client";
 import Header from "../../components/Header/Header";
 import "./HomePage.scss";
 import { getEmotion } from "../../services/emotionServices";
 import { unAuthAxiosCall } from "../../services";
 import { arrayUnion } from "../../utils"
+import styled, { keyframes } from "styled-components";
+import { fadeIn } from "react-animations";
+import axios from "axios";
+const FadeInDownAnimation = keyframes`${fadeIn}`;
+const FadeInDownDiv = styled.div`
+  animation: 3s ${FadeInDownAnimation};
+`;
 
 const HomePage = () => {
   const [inputMessage, setInputMessage] = useState("");
   const [allMessages, setAllMessages] = useState([]);
-
+  const [user, setUser] = useState("")
   const [socket, setSocket] = useState(null);
 
   useEffect(() => {
@@ -25,6 +32,23 @@ const HomePage = () => {
       const newAllMessages = arrayUnion(allMessages, response.data, (arr1, arr2) => arr1.id === arr2.id)
       setAllMessages(newAllMessages)
     });
+  }, [])
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      setUser("Guest")
+      return;
+    }
+    axios
+    .get('http://localhost:4000/users/current', {
+        headers: {
+            Authorization: 'Bearer ' + token
+        }
+    })
+    .then((response) => {
+      setUser(response.data.username)
+    })
   }, [])
   
   useEffect(() => {
@@ -49,18 +73,32 @@ const HomePage = () => {
   const onMessageSubmit = async (e) => {
     e.preventDefault();
     const emotion = await getEmotion(inputMessage);
-    socket?.emit("message", { text: inputMessage, emotion: emotion.data });
+    socket?.emit("message", { text: inputMessage, emotion: emotion.data, user: user });
     setInputMessage("");
   };
 
+  // scrolls down when new message is submited
+
+  const messagesEndRef = useRef(null)
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
+  }
+
+  useEffect(() => {
+    scrollToBottom()
+  }, [allMessages]);
+
   const renderChat = () => {
     return allMessages.map((message, index) => (
-      <div key={index} className="home__box">
-        <h3 className="home__name" style={{backgroundColor: message.emotion + `50`, color: message.emotion}}>
-          {message.user.name}:{" "}
-          <span className="home__text" >{message.text}</span>
-        </h3>
-      </div>
+      <FadeInDownDiv>
+        <div key={index} className="home__box">
+          <h3 className="home__name" style={{backgroundColor: message.emotion + `50`, color: message.emotion}}>
+            {message.user}:{" "}
+            <span className="home__text" >{message.text}</span>
+          </h3>
+        </div>
+      </FadeInDownDiv>
     ));
   };
   return (
@@ -80,8 +118,11 @@ const HomePage = () => {
           <button className="home__button">Send Message</button>
         </form>
         <div className="home__content">
-          <h1 className="home__title">Express yourself</h1>
-          <div className="home__chat">{renderChat()}</div>
+          <h1 className="home__title">Join the Emotion!</h1>
+          <div className="home__chat">
+            {renderChat()}
+            <div ref={messagesEndRef} />
+          </div>
         </div>
       </div>
     </div>
