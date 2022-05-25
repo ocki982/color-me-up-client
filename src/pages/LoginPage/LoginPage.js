@@ -1,5 +1,5 @@
 import "./LoginPage.scss";
-import { Component } from "react";
+import React, { useState } from "react";
 import Input from "../../components/Input/Input";
 import axios from "axios";
 import { Redirect, Link } from "react-router-dom";
@@ -10,13 +10,11 @@ const FadeInDownDiv = styled.div`
   animation: 3s ${FadeInDownAnimation};
 `;
 
-class LoginPage extends Component {
-  state = {
-    error: "",
-    success: false,
-  };
+const LoginPage = () => {
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState(false);
 
-  handleSubmit = (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
 
     axios
@@ -26,37 +24,30 @@ class LoginPage extends Component {
       })
       .then((response) => {
         localStorage.setItem("token", response.data.user);
-        this.setState({ success: true });
+        setSuccess(true);
       })
       .catch((error) => {
-        this.setState({ error: error.response.data });
+        setError(error.response.data);
       });
   };
 
-  render() {
-    return (
-      <FadeInDownDiv>
-        <main className="login-page">
-          <form className="login" onSubmit={this.handleSubmit}>
-            <h1 className="login__title">Log in</h1>
-
-            <Input type="text" name="email" label="Email" />
-            <Input type="password" name="password" label="Password" />
-
-            <button className="login__button">Log in</button>
-
-            {this.state.error && (
-              <div className="login__message">{this.state.error}</div>
-            )}
-            {this.state.success && <Redirect to="/home" />}
-          </form>
-          <p>
-            Need an account? <Link to="/register">Register</Link>
-          </p>
-        </main>
-      </FadeInDownDiv>
-    );
-  }
-}
+  return (
+    <FadeInDownDiv>
+      <main className="login-page">
+        <form className="login" onSubmit={handleSubmit}>
+          <h1 className="login__title">Log in</h1>
+          <Input type="text" name="email" label="Email" />
+          <Input type="password" name="password" label="Password" />
+          <button className="login__button">Get your feelings</button>
+          {error && <div className="login__message">{error}</div>}
+          {success && <Redirect to="/home" />}
+        </form>
+        <p>
+          Need an account? <Link to="/register">Register</Link>
+        </p>
+      </main>
+    </FadeInDownDiv>
+  );
+};
 
 export default LoginPage;

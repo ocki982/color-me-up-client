@@ -64,7 +64,7 @@ const Background = () => {
   return (
     <Canvas linear camera={{ position: [0, 0, 10], fov: 25 }}>
       <Lines
-        count={100}
+        count={10}
         colors={[
           "orange",
           "purple",
