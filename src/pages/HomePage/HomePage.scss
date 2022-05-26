@@ -3,56 +3,84 @@
     flex-direction: column-reverse;
     justify-content: flex-start;
     align-items: center;
-    grid-template-columns: 1fr 1fr;
-    margin: 30px;
-    min-height: 30rem;
+    margin: 1rem;
+    padding: 1rem;
 
     &__input{
-      width: 18rem;
+      width: 20rem;
       border-radius: 4px;
-      border: solid 1px black;
-      background: transparent;
-      padding: 0.4rem 1rem;
+      border: solid 2px black;
+      background-color: rgba($color: white, $alpha: 0.4);
+      padding: 0.8rem 1rem;
     }
 
     &__form {
-      min-width: 30rem;
+      width: 100%;
       border-radius: 5px;
       display: flex;
-      padding-bottom: 2rem;
-      justify-content: space-between;
+      padding-bottom: 3rem;
+      justify-content: center;
       align-items: baseline;
-      // box-shadow: 0px 3px 24px -8px rgba(0, 0, 0, 0.75);
     }
      
     &__button {
       margin-top: 20px;
-      padding: 0.4rem 0.7rem;
+      padding: 0.6rem 0.7rem;
       background: transparent;
+      font-size: 1.1rem;
       border-radius: 5px;
+      border: solid 2px black;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.15s;
+      margin-left: 1.5rem;
+
+      &:hover {
+        background-color: #800080;
+    }
     }
     
-    &__chat {
+    &__content {
       width: 30rem;
       border-radius: 5px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      height: 100%;
-      // box-shadow: 0px 3px 24px -8px rgba(0, 0, 0, 0.75);
+      align-items: center;
+    }
+
+    &__chat {
+      margin-top: 40px;
+      max-height: 30rem;
+      width: 100%;
+      padding: 0 1rem;
+      overflow: auto;
+    }
+
+    &__title{
+      margin: 0 0 1rem;
+      padding: 0 0 0.5rem;
+      border-bottom: 5px solid #800080;
+      width: fit-content;
     }
     
     &__name {
-      width: 100%;
-      text-align: left;
+      width: fit-content;
       background-color: rgba(255, 0, 0, 0.582);
       padding: 0.2rem 1rem;
       border-radius: 4px;
       margin-bottom: 1rem;
       color: #2f72da;
     }
+
+    &__box{
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
     
     &__text {
       color: black;
+      line-height: 1.5rem;
     }
   }

@@ -1,100 +1,100 @@
 import "./ProfilePage.scss";
-import { Component } from "react";
-import axios from 'axios';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import { Link } from "react-router-dom";
 import Header from "../../components/Header/Header";
 
-class ProfilePage extends Component {
-    state = {
-        user: null,
-        failedAuth: false
+const ProfilePage = () => {
+  const [user, setUser] = useState("");
+  const [post, setPost] = useState(null);
+  const [failedAuth, setFailedAuth] = useState(false);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      setFailedAuth(true);
+      return;
     }
 
-    componentDidMount() {
-        const token = localStorage.getItem('token');
+    // Get the messages and user for the respective account
+    axios
+      .get("http://localhost:4000/posts/user/all", {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      })
+      .then((response) => {
+        setPost(response.data);
+      })
+      .catch(() => {
+        setFailedAuth(true);
+      });
+    axios
+      .get("http://localhost:4000/users/current", {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      })
+      .then((response) => {
+        setUser(response.data.username);
+      })
+      .catch(() => {
+        setFailedAuth(true);
+      });
+  }, []);
 
-        if (!token) {
-            this.setState({ failedAuth: true });
-            return;
-        }
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    setUser("");
+    setFailedAuth(true);
+    setPost(null);
+  };
 
-        // Get the data from the API
-        axios
-            .get('http://localhost:4000/posts/user/all', {
-                headers: {
-                    Authorization: 'Bearer ' + token
-                }
-            })
-            .then((response) => {
-                this.setState({
-                    user: response.data
-                });
-            })
-            .catch(() => {
-                this.setState({
-                    failedAuth: true
-                })
-            });
-    }
+  const renderMessages = () => {
+    return post.map(({ text, emotion }, index) => (
+      <div key={index}>
+        <h3
+          className="profile__name"
+          style={{ backgroundColor: emotion + `50`, color: emotion }}
+        >
+          <span className="profile__text">{text}</span>
+        </h3>
+      </div>
+    ));
+  };
 
-    handleLogout = () => {
-        localStorage.removeItem("token");
-        this.setState({
-            user: null,
-            failedAuth: true
-        })
-    };
+  if (failedAuth) {
+    return (
+      <main className="profile">
+        <p>
+          Please log in to use this function. <Link to="/">Log in</Link>
+        </p>
+      </main>
+    );
+  }
 
-    renderMessages = () => {
-		return this.state.user.map(({ text }, index) => (
-			<div key={index}>
-				<h3>
-					<span>{text}</span>
-				</h3>
-			</div>
-		))
-	}
+  if (!post) {
+    return (
+      <main className="profile">
+        <p>Loading...</p>
+      </main>
+    );
+  }
 
-
-
-    render() {
-        if (this.state.failedAuth) {
-            return (
-                <main className="dashboard">
-                    <p>You must be logged in to see this page. <Link to="/">Log in</Link></p>
-                </main>
-            )
-        }
-
-        if (!this.state.user) {
-            return (
-                <main className="dashboard">
-                    <p>Loading...</p>
-                </main>
-            )
-        }
-
-        const { user } = this.state.user[0];
-
-        return (
-            <div>
-                <Header/>
-                <main className="dashboard">
-                    <h1 className="dashboard__title">Dashboard</h1>
-                    <p>
-                        Welcome back, {user}! 👋
-                    </p>
-                    <h2>My Profile</h2>
-                    {this.renderMessages()}
-
-
-                    <button className="dashboard__logout" onClick={this.handleLogout}>
-                        Log out
-                    </button>
-                </main>
-            </div>
-        );
-    }
-}
+  return (
+    <div>
+      <Header />
+      <main className="profile">
+        <h1 className="profile__title">Profile</h1>
+        <h2 className="profile__dash"> {user}'s Messages</h2>
+        {renderMessages()}
+        <button className="profile__logout" onClick={handleLogout}>
+          Log out
+        </button>
+      </main>
+    </div>
+  );
+};
 
 export default ProfilePage;
