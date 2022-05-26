@@ -2,6 +2,8 @@ import React, { useMemo, useRef } from "react";
 import * as THREE from "three";
 import { MeshLine, MeshLineMaterial } from "threejs-meshline";
 import { extend, Canvas, useFrame } from "@react-three/fiber";
+import allMessagesAtom from '../../recoil/atoms';
+import { useRecoilValue } from "recoil";
 
 extend({ MeshLine, MeshLineMaterial })
 
@@ -25,10 +27,10 @@ const Confetti = ({ curve, width, color, speed }) => {
   );
 };
 
-const Lines = ({ count, colors }) => {
+const Lines = ({array}) => {
   const lines = useMemo(
     () =>
-      new Array(count).fill().map(() => {
+      new Array(array.length).fill().map((x,i) => {
         const pos = new THREE.Vector3(
           10 - Math.random() * 15,
           10 - Math.random() * 15,
@@ -49,30 +51,25 @@ const Lines = ({ count, colors }) => {
           );
         const curve = new THREE.CatmullRomCurve3(points).getPoints(1000);
         return {
-          color: colors[parseInt(colors.length * Math.random())],
+          color: array[i]?.emotion || '',
           width: Math.max(0.1, 0.5 * Math.random()),
           speed: Math.max(0.0001, 0.0005 * Math.random()),
           curve,
         };
       }),
-    [colors, count]
+    [array]
   );
+
   return lines.map((props, index) => <Confetti key={index} {...props} />);
 };
 
 const Background = () => {
+  const allMessagesState = useRecoilValue(allMessagesAtom);
+
   return (
     <Canvas linear camera={{ position: [0, 0, 10], fov: 25 }}>
       <Lines
-        count={10}
-        colors={[
-          "orange",
-          "purple",
-          "yellow",
-          "green",
-          "red",
-          "blue"
-        ]}
+        array={allMessagesState}
       />
     </Canvas>
   );

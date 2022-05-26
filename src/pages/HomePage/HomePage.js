@@ -8,6 +8,9 @@ import { arrayUnion } from "../../utils"
 import styled, { keyframes } from "styled-components";
 import { fadeIn } from "react-animations";
 import axios from "axios";
+import allMessagesAtom from '../../recoil/atoms';
+import { useRecoilState } from "recoil";
+
 const FadeInDownAnimation = keyframes`${fadeIn}`;
 const FadeInDownDiv = styled.div`
   animation: 3s ${FadeInDownAnimation};
@@ -15,7 +18,7 @@ const FadeInDownDiv = styled.div`
 
 const HomePage = () => {
   const [inputMessage, setInputMessage] = useState("");
-  const [allMessages, setAllMessages] = useState([]);
+  const [allMessages, setAllMessages] = useRecoilState(allMessagesAtom);
   const [user, setUser] = useState("")
   const [socket, setSocket] = useState(null);
 
@@ -91,8 +94,8 @@ const HomePage = () => {
 
   const renderChat = () => {
     return allMessages.map((message, index) => (
-      <FadeInDownDiv>
-        <div key={index} className="home__box">
+      <FadeInDownDiv key={index}>
+        <div className="home__box">
           <h3 className="home__name" style={{backgroundColor: message.emotion + `50`, color: message.emotion}}>
             {message.user}:{" "}
             <span className="home__text" >{message.text}</span>
