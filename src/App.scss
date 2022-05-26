@@ -1,0 +1,41 @@
+@use './styles/partials/fonts' as *;
+@use './styles/partials/variables' as *;
+
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin:0;
+}
+
+html,
+body,
+#root{
+  width: 100%;
+  height: 100%;
+  font-family: 'Roboto', 'Arial', sans-serif;
+}
+
+button{
+  cursor: pointer;
+}
+
+.app{
+    position: relative;
+}
+
+.canvas{
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  position: absolute;
+}
+
+.page{
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  top: 0;
+  left: 0;
+  z-index: 99;
+}

@@ -1,0 +1,26 @@
+// emotions
+
+$Happy:#008000;
+$Angry:#ff0000;
+$Excited: #ffff00;
+$Sad:#0000ff;
+$Fear:#ffa500;
+$Bored:#800080;
+
+// variables for breakpoints
+$tablet-breakpoint: 768px;
+$desktop-breakpoint: 1280px;
+
+// mixins for each breakpoint in the responsive design
+
+@mixin tablet {
+    @media screen and (min-width: $tablet-breakpoint){
+        @content;
+    }
+}
+
+@mixin desktop {
+    @media screen and (min-width: $desktop-breakpoint){
+        @content;
+    }
+}
