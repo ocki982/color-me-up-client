@@ -14,6 +14,7 @@ const LoginPage = () => {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
 
+  // Function to submit user data to get back a JWT token
   const handleSubmit = (event) => {
     event.preventDefault();
 
@@ -42,8 +43,11 @@ const LoginPage = () => {
           {error && <div className="login__message">{error}</div>}
           {success && <Redirect to="/home" />}
         </form>
-        <p>
+        <p className="login__text">
           Need an account? <Link to="/register">Register</Link>
+        </p>
+        <p>
+          Or you can also enter as <Link to="/home">Guest!</Link>
         </p>
       </main>
     </FadeInDownDiv>

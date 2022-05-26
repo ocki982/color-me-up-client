@@ -1,7 +1,8 @@
 import axios from "axios";
 
-const API_URL = process.env.REACT_APP_API_URL?.toString() || "http://localhost:4000";
-console.log(API_URL)
+const API_URL = process.env.REACT_APP_API_URL || "http://localhost:4000";
+
+// Function to get axios calls to the whole app
 const axiosInstance = axios.create({
   headers: {
     "Access-Control-Allow-Origin": "*",
@@ -16,6 +17,7 @@ axiosInstance.interceptors.response.use(
   (error) => console.error(error.response?.data)
 );
 
+// Gets query params
 const encodeQueryParams = (url, query) => {
   const encodeURL = new URL(url);
   if (query) {
@@ -26,6 +28,7 @@ const encodeQueryParams = (url, query) => {
   return encodeURL;
 };
 
+// Makes the call stating the method and the rest of the data
 const axiosCall = async (url, { query, ...requestOptions }) => {
   const requestUrl = encodeQueryParams(`${API_URL}${url}`, query);
   try {

@@ -1,9 +1,11 @@
-import React, { useMemo, useRef } from "react";
+import React, { useMemo, useRef, useEffect } from "react";
 import * as THREE from "three";
 import { MeshLine, MeshLineMaterial } from "threejs-meshline";
 import { extend, Canvas, useFrame } from "@react-three/fiber";
 import allMessagesAtom from '../../recoil/atoms';
-import { useRecoilValue } from "recoil";
+import { useRecoilState } from "recoil";
+import { arrayUnion } from "../../utils"
+import { unAuthAxiosCall } from "../../services";
 
 extend({ MeshLine, MeshLineMaterial })
 
@@ -64,7 +66,16 @@ const Lines = ({array}) => {
 };
 
 const Background = () => {
-  const allMessagesState = useRecoilValue(allMessagesAtom);
+  const [allMessagesState, setAllMessagesState] = useRecoilState(allMessagesAtom);
+
+  useEffect(() => {
+    unAuthAxiosCall("/posts/all", {
+      method: "GET"
+    }).then((response) =>{
+      const newAllMessages = arrayUnion(allMessagesState, response.data, (arr1, arr2) => arr1.id === arr2.id)
+      setAllMessagesState(newAllMessages)
+    });
+  }, [])
 
   return (
     <Canvas linear camera={{ position: [0, 0, 10], fov: 25 }}>

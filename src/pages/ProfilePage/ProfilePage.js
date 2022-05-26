@@ -17,7 +17,7 @@ const ProfilePage = () => {
       return;
     }
 
-    // Get the data from the API
+    // Get the messages and user for the respective account
     axios
       .get("http://localhost:4000/posts/user/all", {
         headers: {
@@ -68,7 +68,7 @@ const ProfilePage = () => {
     return (
       <main className="profile">
         <p>
-          You must be logged in to see this page. <Link to="/">Log in</Link>
+          Please log in to use this function. <Link to="/">Log in</Link>
         </p>
       </main>
     );
