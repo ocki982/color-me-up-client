@@ -19,7 +19,7 @@ const ProfilePage = () => {
 
     // Get the messages and user for the respective account
     axios
-      .get("http://localhost:4000/posts/user/all", {
+      .get("https://color-me-up.herokuapp.com/posts/user/all", {
         headers: {
           Authorization: "Bearer " + token,
         },
@@ -31,7 +31,7 @@ const ProfilePage = () => {
         setFailedAuth(true);
       });
     axios
-      .get("http://localhost:4000/users/current", {
+      .get("https://color-me-up.herokuapp.com/users/current", {
         headers: {
           Authorization: "Bearer " + token,
         },

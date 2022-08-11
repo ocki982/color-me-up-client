@@ -25,7 +25,7 @@ const HomePage = () => {
 
   // Connects to socket on back-end
   useEffect(() => {
-    const newSocket = io(`http://localhost:4000`);
+    const newSocket = io(`https://color-me-up.herokuapp.com`);
     setSocket(newSocket);
     return () => newSocket.close();
   }, [setSocket]);
@@ -39,7 +39,7 @@ const HomePage = () => {
       return;
     }
     axios
-      .get("http://localhost:4000/users/current", {
+      .get("https://color-me-up.herokuapp.com/users/current", {
         headers: {
           Authorization: "Bearer " + token,
         },

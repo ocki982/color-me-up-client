@@ -18,7 +18,7 @@ const RegisterPage = () => {
     event.preventDefault();
 
     axios
-      .post("http://localhost:4000/auth/register", {
+      .post("https://color-me-up.herokuapp.com/auth/register", {
         email: event.target.email.value,
         password: event.target.password.value,
         username: event.target.username.value,

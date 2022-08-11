@@ -19,7 +19,7 @@ const LoginPage = () => {
     event.preventDefault();
 
     axios
-      .post("http://localhost:4000/auth/login", {
+      .post("https://color-me-up.herokuapp.com/auth/login", {
         email: event.target.email.value,
         password: event.target.password.value,
       })
