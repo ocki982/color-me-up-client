@@ -4,8 +4,9 @@
 Color me Up! is a web app where all your emotional thoughts gather together in a fun and creative way
 
 *UPDATE*
-Now you can check the webstie live! https://color-me-up.netlify.app/ (give a few seconds for the backend server to wakeup and check the background)
+Now you can check the webstie live! https://color-me-up.netlify.app/
 
+![colorup](https://user-images.githubusercontent.com/68573345/184258718-1dac9ae4-3417-4ede-b79a-dd7432c447fc.png)
 
 
 ## Authors
