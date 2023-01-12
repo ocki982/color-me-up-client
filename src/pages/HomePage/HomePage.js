@@ -3,7 +3,7 @@ import io from "socket.io-client";
 import Header from "../../components/Header/Header";
 import "./HomePage.scss";
 import { getEmotion } from "../../services/emotionServices";
-import { unAuthAxiosCall } from "../../services";
+// import { unAuthAxiosCall } from "../../services";
 import { arrayUnion } from "../../utils";
 import styled, { keyframes } from "styled-components";
 import axios from "axios";
